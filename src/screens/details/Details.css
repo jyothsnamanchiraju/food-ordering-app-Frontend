@@ -1,0 +1,102 @@
+/* Make body utilise 100% of width and height */
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+/* Style for restaurant details  */
+.r-details-wrapper {
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background: #e0e0e0;
+}
+
+img {
+    width: 100%;
+}
+
+/* Styling for restaurant name */
+.r-name {
+    margin-bottom: 8px;
+    font-weight: 500;
+    opacity: 0.6;
+}
+
+/* Styling for top and bottom containers towards right in restaurant details */
+.r-details-container-top, 
+.r-details-container-bottom {
+    padding-left: 60px;
+}
+
+/* Styling for locality */
+.r-locality {
+    margin-top: 8px;
+    font-weight: 700;
+    font-size: 1.1em;
+    letter-spacing: 1pt;
+    opacity: 0.5;
+    text-transform: uppercase;
+}
+
+
+/* Styling No. of customers and average cost */
+.r-no-of-customers, 
+.r-avg-cost {
+    width: 30%;
+    margin-top: 0;
+    opacity: 0.4;
+    letter-spacing: 1pt;
+}
+
+/* Styling for width of screens less than 900px */
+@media screen and (max-width: 900px) {
+
+    /* below follows the styling for restaurant information section */
+    .r-details-wrapper, 
+    .r-details-container-top {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    img {
+        width: 80%;
+    }
+
+    .r-image {
+        text-align: center;
+    }
+
+    .r-name {
+        margin-top: 0;
+    }
+
+    .r-details-container-top {
+        padding-top: 0;
+        padding-right: 0;
+    }
+
+    .r-details-container-top, 
+    .r-details-container-bottom {
+        padding-left: 0;
+    }
+
+    .r-rating, 
+    .r-cost {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .r-no-of-customers, 
+    .r-avg-cost {
+        width: 100%;
+        text-align: center;
+    }
+    /* End of styling for restaurant information section */
+    
+  }
