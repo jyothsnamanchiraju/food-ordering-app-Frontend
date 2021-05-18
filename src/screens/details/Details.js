@@ -4,6 +4,8 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import AddIcon from '@material-ui/icons/Add';
 import { IconButton } from "@material-ui/core";
+import CloseIcon from '@material-ui/icons/Close';
+import Snackbar from '@material-ui/core/Snackbar';
 import '../../assets/font-awesome-4.7.0/css/font-awesome.min.css';
 
 class Details extends Component {
@@ -11,6 +13,8 @@ class Details extends Component {
     constructor() {
         super();
         this.state = {
+            snackBarOpen: false,
+            snackBarCount: 0,
             restaurantData : {
                 "id": "5485eb18-a23b-11e8-9077-720006ceb890",
                 "restaurant_name": "Splitsvilla Bar & Lounge",
@@ -209,6 +213,19 @@ class Details extends Component {
         }
     }
 
+    /* To open snackbar and perform some action */
+    snackbarOpenHandler = () => {
+        this.setState({snackBarOpen: true, snackBarCount: this.state.snackBarCount+1});
+    }
+
+    /* Close the snackbar */
+    snackbarCloseHandler = (e, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        this.setState({snackBarOpen: false, snackBarCount: 0});
+    }
+
     render() {
         
         let data = this.state.restaurantData; // shorthand for this.state.restaurantData
@@ -274,12 +291,24 @@ class Details extends Component {
                                             </Grid>
                                             <Grid item xs={8} key={"itemName"+j+1} className="item-name"><span>{item.item_name}</span></Grid>
                                             <Grid item xs={2} key={"itemPrice"+j+1} className="item-price"><i className="fa fa-inr" aria-hidden="true"></i> {item.price.toFixed(2)}</Grid>
-                                            <Grid item xs={1} key={"plus"+j+1}><IconButton className="addIcon"><AddIcon/></IconButton></Grid>
+                                            <Grid item xs={1} key={"plus"+j+1}><IconButton className="addIcon" onClick={this.snackbarOpenHandler}><AddIcon/></IconButton></Grid>
                                         </Grid>
                                     ))}
                                 </div>
                             ))
                         }
+                        
+                        {/* Snackbar */}
+                        <Snackbar anchorOrigin={{vertical: 'bottom', horizontal: 'left',}} open={this.state.snackBarOpen} autoHideDuration={2000}
+                        onClose={this.snackbarCloseHandler} message="Item added to cart!"
+                            action={
+                                <React.Fragment>
+                                    <IconButton size="small" aria-label="close" color="inherit" onClick={this.snackbarCloseHandler} value="close">
+                                        <CloseIcon fontSize="small" />
+                                    </IconButton>
+                                </React.Fragment>
+                            }
+                        />
                     </div>
                 </div>
             </div>
