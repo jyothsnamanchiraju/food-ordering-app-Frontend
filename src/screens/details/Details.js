@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import './Details.css';
-import { withStyles } from "@material-ui/core/styles";
-// import { Typography } from "@material-ui/core";
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import AddIcon from '@material-ui/icons/Add';
+import { IconButton } from "@material-ui/core";
 import '../../assets/font-awesome-4.7.0/css/font-awesome.min.css';
 
 class Details extends Component {
@@ -255,6 +256,32 @@ class Details extends Component {
 
                     </Grid> {/* End of class="r-container-right" */}
                 </Grid> {/* End of class="r-details-wrapper" */}
+
+                <div className="order-menu">
+                    <div className="category-container">
+                        {   /* Loop through each category and display items in it*/
+                            data.categories.map((element, i) => (
+                                <div key={"cat"+i+1}>
+                                    <p key={"catName"+i+1} className="category-name">{element.category_name}</p>
+                                    <Divider className="horizontal-line"/>
+                                    {element.item_list.map((item, j) => (
+                                        <Grid container key={"itemList"+j+1} className="item-details-container">
+                                            <Grid item xs={1} key={"itemType"+j+1}>
+                                                {item.item_type === "VEG"
+                                                    ? <i className="fa fa-circle veg" aria-hidden="true"></i>
+                                                    : <i className="fa fa-circle non-veg" aria-hidden="true"></i>
+                                                }
+                                            </Grid>
+                                            <Grid item xs={8} key={"itemName"+j+1} className="item-name"><span>{item.item_name}</span></Grid>
+                                            <Grid item xs={2} key={"itemPrice"+j+1} className="item-price"><i className="fa fa-inr" aria-hidden="true"></i> {item.price.toFixed(2)}</Grid>
+                                            <Grid item xs={1} key={"plus"+j+1}><IconButton className="addIcon"><AddIcon/></IconButton></Grid>
+                                        </Grid>
+                                    ))}
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div>
             </div>
         );
     }

@@ -5,12 +5,21 @@ body {
   height: 100%;
 }
 
+.container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Style for restaurant details  */
 .r-details-wrapper {
-    width: 100%;
-    margin: 0;
     padding: 20px;
     background: #e0e0e0;
+}
+
+.r-details-wrapper-id {
+    width: 100%;
+    margin: 0;
 }
 
 img {
@@ -48,6 +57,55 @@ img {
     margin-top: 0;
     opacity: 0.4;
     letter-spacing: 1pt;
+}
+
+/* Styling for order menu and cart*/
+.order-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 80px;
+    padding-top: 30px;
+}
+
+.category-container {
+    width: 40%;
+}
+
+.category-name {
+    margin-top: 40px;
+    margin-bottom: 8px;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: medium;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.4;
+}
+
+.horizontal-line {
+    margin-bottom: 20px !important;
+}
+
+.item-details-container {
+    margin-bottom: 25px;
+}
+
+.veg {
+    color: #008000;
+}
+
+.non-veg {
+    color: #cc0000;
+}
+
+.item-name {
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-transform: capitalize;
+    padding-top: 3px;
+}
+
+.addIcon {
+    padding: 0 !important;
 }
 
 /* Styling for width of screens less than 900px */
@@ -104,4 +162,4 @@ img {
     }
     /* End of styling for restaurant information section */
     
-  }
+}
