@@ -53,10 +53,15 @@ img {
 /* Styling for width of screens less than 900px */
 @media screen and (max-width: 900px) {
 
+    #r-details-wrapper-id {
+        width: 100%;
+        margin: 0;
+    }
+
     /* below follows the styling for restaurant information section */
     .r-details-wrapper, 
     .r-details-container-top {
-        width: 100%;
+        
         display: flex;
         flex-direction: column;
         justify-content: center;
