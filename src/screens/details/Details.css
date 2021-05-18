@@ -18,8 +18,8 @@ body {
 }
 
 .r-details-wrapper-id {
-    width: 100%;
-    margin: 0;
+    width: 100% !important;
+    margin: 0 !important;
 }
 
 img {
@@ -63,12 +63,12 @@ img {
 .order-menu {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    padding: 80px;
+    justify-content: space-around;
+    padding: 70px;
     padding-top: 30px;
 }
 
-.category-container {
+.category-container, .cart-container {
     width: 40%;
 }
 
@@ -161,5 +161,21 @@ img {
         text-align: center;
     }
     /* End of styling for restaurant information section */
+
+    /* Styling for order menu and cart*/
+    .order-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
     
+    .category-container, .cart-container {
+        width: 100%;
+    }
+
+    .item-details-container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap !important;
+    }
 }

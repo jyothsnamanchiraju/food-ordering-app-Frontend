@@ -6,6 +6,8 @@ import AddIcon from '@material-ui/icons/Add';
 import { IconButton } from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import '../../assets/font-awesome-4.7.0/css/font-awesome.min.css';
 
 class Details extends Component {
@@ -14,7 +16,6 @@ class Details extends Component {
         super();
         this.state = {
             snackBarOpen: false,
-            snackBarCount: 0,
             restaurantData : {
                 "id": "5485eb18-a23b-11e8-9077-720006ceb890",
                 "restaurant_name": "Splitsvilla Bar & Lounge",
@@ -215,7 +216,7 @@ class Details extends Component {
 
     /* To open snackbar and perform some action */
     snackbarOpenHandler = () => {
-        this.setState({snackBarOpen: true, snackBarCount: this.state.snackBarCount+1});
+        this.setState({snackBarOpen: true,});
     }
 
     /* Close the snackbar */
@@ -223,7 +224,7 @@ class Details extends Component {
         if (reason === 'clickaway') {
             return;
         }
-        this.setState({snackBarOpen: false, snackBarCount: 0});
+        this.setState({snackBarOpen: false});
     }
 
     render() {
@@ -309,6 +310,14 @@ class Details extends Component {
                                 </React.Fragment>
                             }
                         />
+                    </div>
+                    <div className="cart-container">
+                        <Card>
+                            
+                            <CardContent id="card-content">
+                            
+                            </CardContent>
+                        </Card>
                     </div>
                 </div>
             </div>
