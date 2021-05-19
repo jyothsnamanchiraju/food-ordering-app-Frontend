@@ -83,6 +83,7 @@ img {
 }
 
 .horizontal-line {
+    width: 95%;
     margin-bottom: 20px !important;
 }
 
@@ -98,10 +99,20 @@ img {
     color: #cc0000;
 }
 
+/* decrease the space between item name and item type */
+.MuiGrid-grid-xs-1 { 
+    flex-basis: 5% !important;
+}
+
 .item-name {
     font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     text-transform: capitalize;
     padding-top: 3px;
+}
+
+.item-price {
+    text-align: right;
+    padding-right: 1em;
 }
 
 .addIcon {
@@ -177,5 +188,13 @@ img {
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap !important;
+    }
+
+    .item-price {
+        padding-right: 0;
+    }
+
+    .addIcon {
+        margin-left: 5px !important;
     }
 }
