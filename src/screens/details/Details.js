@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import './Details.css';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import AddIcon from '@material-ui/icons/Add';
 import { IconButton } from "@material-ui/core";
-import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Badge from '@material-ui/core/Badge';
+import Button from '@material-ui/core/Button';
+import CloseIcon from '@material-ui/icons/Close';
+import AddIcon from '@material-ui/icons/Add';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import '../../assets/font-awesome-4.7.0/css/font-awesome.min.css';
 
 class Details extends Component {
@@ -311,12 +314,25 @@ class Details extends Component {
                             }
                         />
                     </div>
+
+                    {/* Shopping cart container */}
                     <div className="cart-container">
                         <Card>
-                            
-                            <CardContent id="card-content">
-                            
-                            </CardContent>
+                          <CardContent id="card-content">
+                            <div className="card-header">
+                              <Badge badgeContent={0} color="primary" showZero>
+                                <ShoppingCartIcon />
+                              </Badge>
+                              <p className="card-heading">My Cart</p>
+                            </div>
+                            <div className="total">
+                              <span className="total-amount">TOTAL AMOUNT</span>
+                              <span className="amount"><i className="fa fa-inr" aria-hidden="true"></i> 100.00</span>
+                            </div>
+                            <Button className="checkout" variant="contained" color="primary">
+                              Checkout
+                            </Button>
+                          </CardContent>
                         </Card>
                     </div>
                 </div>
