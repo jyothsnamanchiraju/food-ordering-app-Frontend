@@ -84,7 +84,6 @@ img {
 }
 
 .horizontal-line {
-    width: 95%;
     margin-bottom: 20px !important;
 }
 
@@ -300,5 +299,72 @@ img {
     /* '-' and '+' displays above and below */
     .cart-quantity-container {
         padding-right: 2em;
+    }
+}
+
+
+/* For mobile use */
+@media screen and (max-width: 500px) {
+
+    .r-name {
+        font-size: 1.5em;
+        opacity: 0.8;
+    }
+
+    .r-categories {
+        text-align: center;
+        margin-top: 0;
+    }
+
+    .r-details-container-bottom {
+        align-items: initial !important;
+    }
+
+    .r-rating, 
+    .r-cost {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .r-no-of-customers, 
+    .r-avg-cost {
+        width: 100%;
+        text-align: center;
+        font-size: 0.9em;
+        margin-bottom: 0;
+    }
+    /* End of styling for restaurant information section */
+
+    /* Styling for order menu and cart*/
+    .order-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 2em;
+        padding-top: 0.5em;
+    }
+    
+    .category-container, .cart-container {
+        width: 100%;
+    }
+
+    .item-details-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .item-name {
+        width: 10%;
+        padding-left: 0.5em;
+    }
+
+    /* '-' and '+' displays above and below */
+    .cart-quantity-container {
+        padding-right: 1em;
+    }
+
+    .cart-item-details-container {
+        margin-top: 0.5em;
     }
 }

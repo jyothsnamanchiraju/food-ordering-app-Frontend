@@ -302,13 +302,14 @@ class Details extends Component {
                         <Grid item xs={12} className="r-details-container-top">  
                             <h1 className="r-name">{data.restaurant_name}</h1>
                             <p className="r-locality">{data.address.locality}</p>
-                            <p>
-                            {   /* Loop through each category and display it*/
+                            <p className="r-categories">
+                              { /* Loop through each category and display it*/
                                 this.state.restaurantData.categories.map((element,i) => (
-                                    data.categories.length-1 !== i 
-                                    ? <span key={"cat"+i+1}>{element.category_name}, </span>
-                                    : <span key={"cat"+i+1}>{element.category_name} </span>
-                            ))}</p>
+                                  data.categories.length-1 !== i 
+                                  ? <span key={"cat"+i+1}>{element.category_name}, </span>
+                                  : <span key={"cat"+i+1}>{element.category_name} </span>
+                              ))}
+                            </p>
                         </Grid>
 
                         {/* This grid contains the details of ratings and average cost for 2 persons */}
@@ -341,15 +342,15 @@ class Details extends Component {
                                     <Divider className="horizontal-line"/>
                                     {element.item_list.map((item, j) => (
                                         <Grid container key={"itemList"+j+1} className="item-details-container">
-                                            <Grid item xs={1} key={"itemType"+j+1}>
+                                            <Grid item xs={1} md={1} key={"itemType"+j+1}>
                                                 {item.item_type === "VEG"
                                                     ? <i className="fa fa-circle veg" aria-hidden="true"></i>
                                                     : <i className="fa fa-circle non-veg" aria-hidden="true"></i>
                                                 }
                                             </Grid>
-                                            <Grid item xs={8} key={"itemName"+j+1} className="item-name"><span>{item.item_name}</span></Grid>
-                                            <Grid item xs={2} key={"itemPrice"+j+1} className="item-price"><i className="fa fa-inr" aria-hidden="true"></i> {item.price.toFixed(2)}</Grid>
-                                            <Grid item xs={1} key={"plus"+j+1}><IconButton className="addIcon" onClick={() => this.snackbarOpenHandler({item}, "Item added to cart!")}><AddIcon/></IconButton></Grid>
+                                            <Grid item xs={6} md={8} key={"itemName"+j+1} className="item-name"><span>{item.item_name}</span></Grid>
+                                            <Grid item xs={4} md={2} key={"itemPrice"+j+1} className="item-price"><i className="fa fa-inr" aria-hidden="true"></i> {item.price.toFixed(2)}</Grid>
+                                            <Grid item xs={1} md={1} key={"plus"+j+1}><IconButton className="addIcon" onClick={() => this.snackbarOpenHandler({item}, "Item added to cart!")}><AddIcon/></IconButton></Grid>
                                         </Grid>
                                     ))}
                                 </div>
@@ -384,21 +385,21 @@ class Details extends Component {
                               { /* Display each item with all the details which is added to cart */
                                 this.state.cartItems.map((cartItem, j) =>(
                                   <Grid container key={"itemList"+j+1} className="cart-item-details-container">
-                                    <Grid item xs={1} key={"itemType"+j+1}>
+                                    <Grid item xs={1} md={1} key={"itemType"+j+1}>
                                         {cartItem.item.item_type === "VEG"
                                             ? <i className="fa fa-stop-circle-o veg" aria-hidden="true"></i>
                                             : <i className="fa fa-stop-circle-o non-veg" aria-hidden="true"></i>
                                         }
                                     </Grid>
-                                    <Grid item xs={4} key={"itemName"+j+1} className="cart-item-name">
+                                    <Grid item xs={3} md={4} key={"itemName"+j+1} className="cart-item-name">
                                       <span>{cartItem.item.item_name}</span>
                                     </Grid>
-                                    <Grid item xs={3} key={"itemQuant"+j+1} className="cart-quantity-container">
+                                    <Grid item xs={3} md={3} key={"itemQuant"+j+1} className="cart-quantity-container">
                                       <i className="fa fa-minus cart-minus" aria-hidden="true" onClick={() => this.cartDecrementQuantityHandler(cartItem, "Item quantity decreased by 1!")}></i>
                                       <span className="cart-quantity">{cartItem.item.quantity}</span>
                                       <i className="fa fa-plus cart-plus" aria-hidden="true" onClick={() => this.snackbarOpenHandler(cartItem, "Item quantity increased by 1!")}></i>
                                     </Grid>
-                                    <Grid item xs={2} key={"itemPrice"+j+1} className="cart-item-price">
+                                    <Grid item xs={3} md={2} key={"itemPrice"+j+1} className="cart-item-price">
                                       <i className="fa fa-inr" aria-hidden="true"></i>
                                       <span> {(cartItem.item.quantity*cartItem.item.price).toFixed(2)}</span>
                                     </Grid>
