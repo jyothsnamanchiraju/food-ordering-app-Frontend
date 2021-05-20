@@ -19,6 +19,10 @@ class Details extends Component {
         super();
         this.state = {
             snackBarOpen: false,
+            cartCount: 0,
+            cartItems: [],
+            totalCost: 0,
+            snackBarMessage: "",
             restaurantData : {
                 "id": "5485eb18-a23b-11e8-9077-720006ceb890",
                 "restaurant_name": "Splitsvilla Bar & Lounge",
@@ -217,9 +221,43 @@ class Details extends Component {
         }
     }
 
-    /* To open snackbar and perform some action */
-    snackbarOpenHandler = () => {
-        this.setState({snackBarOpen: true,});
+    /* This function decrements the quantity and total amount and removes item from cart if quantity is 0 */
+    cartDecrementQuantityHandler = (element, message) => {
+      this.state.cartItems.forEach((eachItemFromCart, j) => {
+        if(eachItemFromCart.item.id === element.item.id) {
+          if(eachItemFromCart.item.quantity === 1) {
+            message = "Item removed from cart!"; // when quantity is 0, removed from cart
+            this.state.cartItems.splice(j, 1);
+          } else {
+            eachItemFromCart.item.quantity -= 1;
+          }
+        }
+      })
+
+      this.setState({snackBarOpen: true, snackBarMessage: message, cartCount: this.state.cartCount-1, totalCost: this.state.totalCost-element.item.price,});
+    }
+
+    /* To open snackbar and add items to the cart and if the item is already present in the cart then increment the quantity */
+    snackbarOpenHandler = (element, message) => {
+      let updated = false;
+
+      this.state.cartItems.forEach((eachItemFromCart) => {
+        if(eachItemFromCart.item.id === element.item.id) {
+          if(!("quantity" in eachItemFromCart.item)) {
+            element.item.quantity = 1;
+          } else {
+            eachItemFromCart.item.quantity += 1;
+          }
+          updated = true;
+        }
+      })
+
+      if(this.state.cartItems.length === 0 || updated === false) {
+        element.item.quantity = 1;
+        this.setState({cartItems: this.state.cartItems.concat(element),});
+      }
+
+      this.setState({snackBarOpen: true, snackBarMessage: message, cartCount: this.state.cartCount+1, totalCost: this.state.totalCost+element.item.price});
     }
 
     /* Close the snackbar */
@@ -295,7 +333,7 @@ class Details extends Component {
                                             </Grid>
                                             <Grid item xs={8} key={"itemName"+j+1} className="item-name"><span>{item.item_name}</span></Grid>
                                             <Grid item xs={2} key={"itemPrice"+j+1} className="item-price"><i className="fa fa-inr" aria-hidden="true"></i> {item.price.toFixed(2)}</Grid>
-                                            <Grid item xs={1} key={"plus"+j+1}><IconButton className="addIcon" onClick={this.snackbarOpenHandler}><AddIcon/></IconButton></Grid>
+                                            <Grid item xs={1} key={"plus"+j+1}><IconButton className="addIcon" onClick={() => this.snackbarOpenHandler({item}, "Item added to cart!")}><AddIcon/></IconButton></Grid>
                                         </Grid>
                                     ))}
                                 </div>
@@ -304,7 +342,7 @@ class Details extends Component {
                         
                         {/* Snackbar */}
                         <Snackbar anchorOrigin={{vertical: 'bottom', horizontal: 'left',}} open={this.state.snackBarOpen} autoHideDuration={2000}
-                        onClose={this.snackbarCloseHandler} message="Item added to cart!"
+                        onClose={this.snackbarCloseHandler} message={this.state.snackBarMessage}
                             action={
                                 <React.Fragment>
                                     <IconButton size="small" aria-label="close" color="inherit" onClick={this.snackbarCloseHandler} value="close">
@@ -320,21 +358,50 @@ class Details extends Component {
                         <Card>
                           <CardContent id="card-content">
                             <div className="card-header">
-                              <Badge badgeContent={0} color="primary" showZero>
+                              <Badge badgeContent={this.state.cartCount} color="primary" showZero>
                                 <ShoppingCartIcon />
                               </Badge>
                               <p className="card-heading">My Cart</p>
                             </div>
+
+                            <div className="cart-items">
+                              { /* Display each item with all the details which is added to cart */
+                                this.state.cartItems.map((cartItem, j) =>(
+                                  <Grid container key={"itemList"+j+1} className="cart-item-details-container">
+                                    <Grid item xs={1} key={"itemType"+j+1}>
+                                        {cartItem.item.item_type === "VEG"
+                                            ? <i className="fa fa-stop-circle-o veg" aria-hidden="true"></i>
+                                            : <i className="fa fa-stop-circle-o non-veg" aria-hidden="true"></i>
+                                        }
+                                    </Grid>
+                                    <Grid item xs={4} key={"itemName"+j+1} className="cart-item-name">
+                                      <span>{cartItem.item.item_name}</span>
+                                    </Grid>
+                                    <Grid item xs={3} key={"itemQuant"+j+1} className="cart-quantity-container">
+                                      <i className="fa fa-minus cart-minus" aria-hidden="true" onClick={() => this.cartDecrementQuantityHandler(cartItem, "Item quantity decreased by 1!")}></i>
+                                      <span className="cart-quantity">{cartItem.item.quantity}</span>
+                                      <i className="fa fa-plus cart-plus" aria-hidden="true" onClick={() => this.snackbarOpenHandler(cartItem, "Item quantity increased by 1!")}></i>
+                                    </Grid>
+                                    <Grid item xs={2} key={"itemPrice"+j+1} className="cart-item-price">
+                                      <i className="fa fa-inr" aria-hidden="true"></i>
+                                      <span> {(cartItem.item.quantity*cartItem.item.price).toFixed(2)}</span>
+                                    </Grid>
+                                  </Grid>          
+                                )) 
+                              }
+                            </div>
+
+                            {/* Total amount and CHECKOUT button */}
                             <div className="total">
                               <span className="total-amount">TOTAL AMOUNT</span>
-                              <span className="amount"><i className="fa fa-inr" aria-hidden="true"></i> 100.00</span>
+                              <span className="amount"><i className="fa fa-inr" aria-hidden="true"></i> {this.state.totalCost.toFixed(2)}</span>
                             </div>
                             <Button className="checkout" variant="contained" color="primary">
                               Checkout
                             </Button>
                           </CardContent>
                         </Card>
-                    </div>
+                    </div> {/* End of Shopping cart container */}
                 </div>
             </div>
         );
