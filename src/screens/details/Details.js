@@ -221,6 +221,22 @@ class Details extends Component {
         }
     }
 
+    /* This methods checks if cart is empty or not and if customer is logged in/out to go to checkout page */
+    checkoutHandler = () => {
+      if(this.state.cartItems.length === 0) {
+        this.setState({snackBarOpen: true, snackBarMessage: "Please add an item to your cart!",});
+      }
+
+      if(sessionStorage.getItem("access-token") === null){
+        this.setState({snackBarOpen: true, snackBarMessage: "Please login first!",});
+      } else {
+        this.props.history.push({
+          pathname: "/checkout",
+          state: {restaurantName: this.state.restaurantData.restaurant_name, checkoutCartItems: this.state.cartItems, totalAmount: this.state.cartItems.totalCost}
+        }) 
+      }
+    }
+
     /* This function decrements the quantity and total amount and removes item from cart if quantity is 0 */
     cartDecrementQuantityHandler = (element, message) => {
       this.state.cartItems.forEach((eachItemFromCart, j) => {
@@ -396,7 +412,7 @@ class Details extends Component {
                               <span className="total-amount">TOTAL AMOUNT</span>
                               <span className="amount"><i className="fa fa-inr" aria-hidden="true"></i> {this.state.totalCost.toFixed(2)}</span>
                             </div>
-                            <Button className="checkout" variant="contained" color="primary">
+                            <Button className="checkout" variant="contained" color="primary" onClick={this.checkoutHandler}>
                               Checkout
                             </Button>
                           </CardContent>
