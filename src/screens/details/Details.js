@@ -145,7 +145,7 @@ class Details extends Component {
                             <Grid item xs={6} className="r-rating">
                                 <div>
                                     <i className="fa fa-star" aria-hidden="true"></i>
-                                    <span> {data.customer_rating}</span>
+                                    <span> {data.customer_rating.toFixed(1)}</span>
                                 </div>
                                 <p className="r-no-of-customers">AVERAGE RATING BY <strong>{data.number_customers_rated}</strong> CUSTOMERS</p>
                             </Grid>
