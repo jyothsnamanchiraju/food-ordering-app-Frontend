@@ -217,6 +217,12 @@ img {
     margin-right: 0.5em;
 }
 
+.loading {
+    margin-left: 50%;
+    font-size: 100px !important;
+    color: rgb(245, 29, 65);
+}
+
 /* Styling for width of screens less than 900px */
 @media screen and (max-width: 900px) {
 
