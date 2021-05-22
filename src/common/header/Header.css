@@ -1,0 +1,31 @@
+.hdr{
+    background-color: #262828;
+    display:flex; 
+    flex-direction: row; 
+    justify-content: space-between;
+    padding: 10px; 
+}
+
+.app-icon{
+    color: white; 
+}
+.search-box{
+    /*background-color: #585C5C;*/ 
+   /* background-color: #707272 ;*/ 
+    color: white;  
+    width:300px; 
+}
+.search-box:active{
+    border-bottom: white;
+}
+.dispBlock{
+    display: block;
+}
+
+.dispNone{
+    display: none; 
+}
+
+.red{
+    color: red; 
+}
