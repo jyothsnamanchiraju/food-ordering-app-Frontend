@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './Details.css';
+import ReactDOM from "react-dom";
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { IconButton } from "@material-ui/core";
@@ -43,8 +44,27 @@ class Details extends Component {
           return response.json();
         })
         .then((json) => {
-          this.setState({ restaurantData: json, load: true });
-      })
+          if(json.code === undefined) {
+            this.setState({ restaurantData: json, load: true });
+          }
+          else {
+            ReactDOM.render(
+              <div className="backend-error">
+                <h1>Restaurant details could not be fetched :(</h1>
+                <p><strong>Error code:</strong> {json.code}</p>
+                <p><strong>Error message:</strong> {json.message}</p>
+              </div>,
+              document.getElementById("root")
+            );
+          }
+      }).catch((ex) => {
+        ReactDOM.render(
+          <div style={{ margin: "10% auto" }}>
+            <h1>Something went wrong, please try again :)</h1>
+          </div>,
+          document.getElementById("root")
+        );
+      });
     };
 
     /* This methods checks if cart is empty or not and if customer is logged in/out to go to checkout page */

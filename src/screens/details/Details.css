@@ -223,6 +223,11 @@ img {
     color: rgb(245, 29, 65);
 }
 
+.backend-error {
+    width: 40%;
+    margin: 10% auto;
+}
+
 /* Styling for width of screens less than 900px */
 @media screen and (max-width: 900px) {
 
