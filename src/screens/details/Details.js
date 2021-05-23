@@ -27,7 +27,6 @@ class Details extends Component {
             snackBarMessage: "",
             restaurantData : {},
             load: false,
-            isLoggedIn: sessionStorage.getItem("access-token") === null ? false : true,
         }
         this.apiURL = "http://localhost:8080/api/";
     }
@@ -74,7 +73,7 @@ class Details extends Component {
       if(this.state.cartItems.length === 0) {
         this.setState({snackBarOpen: true, snackBarMessage: "Please add an item to your cart!",});
       } else {
-        if(this.state.isLoggedIn){
+        if(sessionStorage.getItem("access-token") === null){
           this.setState({snackBarOpen: true, snackBarMessage: "Please login first!",});
         } else {
           sessionStorage.setItem("restaurantDetails",JSON.stringify(this.state.restaurantData));
