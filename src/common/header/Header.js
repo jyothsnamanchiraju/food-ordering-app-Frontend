@@ -151,9 +151,8 @@ class Header extends Component{
                 } else {
                     sessionStorage.setItem("uuid", JSON.parse(this.responseText).id); 
                     sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token")); 
-                
+                    sessionStorage.setItem('firstName', JSON.parse(this.responseText).first_name);
                     that.setState({loggedInCustomerName: JSON.parse(this.responseText).first_name}); 
-
                     that.setState({
                         loggedIn:true, snackBarMessage: "Logged in successfully!", snackBarOpen: true,
                     }); 
@@ -264,6 +263,7 @@ class Header extends Component{
     }
 
     logoutMenuHandler = () =>{
+        sessionStorage.clear();
         this.setState({loggedIn: false, loggedInCustomerName:"", anchorEl: null}); 
     }
     render(){
@@ -286,14 +286,14 @@ class Header extends Component{
                         <div> </div>
                     }
                     {
-                    (this.state.loggedIn === false)
+                    (sessionStorage.getItem('access-token') === null)
                     ?
                         <div>
                         <Button color="default" variant ="contained" onClick = {this.loginModalHandler}> <AccountCircle/>Login </Button>
                         </div>
                     :    
                         <div>
-                        <Button aria-controls="profile-menu" aria-haspopup="true" color="default" variant ="contained" onClick = {this.openMenuHandler}> <AccountCircle/>{this.state.loggedInCustomerName} </Button>
+                        <Button aria-controls="profile-menu" aria-haspopup="true" color="default" variant ="contained" onClick = {this.openMenuHandler}> <AccountCircle/>{sessionStorage.getItem('firstName')} </Button>
                             <Menu id="profile-menu" 
                             anchorEl={this.state.anchorEl}
                             keepMounted 
