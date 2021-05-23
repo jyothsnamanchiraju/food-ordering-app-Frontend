@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './Details.css';
+import Header from '../../common/header/Header';
 import ReactDOM from "react-dom";
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -32,9 +33,8 @@ class Details extends Component {
 
     /* The below method will retrieve data from API before rendering DOM */
     componentDidMount() {
-      // let temp = this.props.location.pathname;
-      // let restaurantId = temp.split("/")[2];
-      let restaurantId = "1dd86f90-a296-11e8-9a3a-720006ceb890"
+      let temp = this.props.location.pathname;
+      let restaurantId = temp.split("/")[2];
 
       fetch(this.apiURL + "restaurant/"+ restaurantId,
         {
@@ -135,6 +135,7 @@ class Details extends Component {
 
         return(
           <div>
+          <Header />
           { this.state.load === true 
             ?
             <div className="container"> 
