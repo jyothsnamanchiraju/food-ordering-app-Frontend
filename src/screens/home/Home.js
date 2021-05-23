@@ -81,29 +81,31 @@ class Home extends Component{
                   (restaurants !==null ) 
                   ?
                   <div className="grid-root">   
-                    <GridList cellHeight={600} cols= {4} spacing={20} className="grid-list">
+                    <GridList cellHeight={500} cols={4} spacing={50} className="grid-list">
                       {
                         restaurants.map(res=>(
-                           <GridListTile key={res.id} onClick={()=> this.restaurantClickHandler(res.id)} style={{alignItems: 'center'}}>
-                             
-                             <Card className="card-root">
-                             <img id= {res.id} src={res.photo_URL} alt={res.restaurant_name} className="restaurant-image"/>
-                             <CardContent className="card-content">
-                             <Typography variant="h4" color="textPrimary" component="h4">
-                                    {res.restaurant_name}
-                             </Typography><br/><br/>
-                             <Typography variant="body1" color="textPrimary" component="p">
+                           <GridListTile key={res.id}>
+                             <Card className="card-root" onClick={()=> this.restaurantClickHandler(res.id)}>
+                              <img id= {res.id} src={res.photo_URL} alt={res.restaurant_name} className="restaurant-image"/>
+                              <CardContent className="card-content">
+                              <div className="home-rest-name">
+                                <Typography variant="h4" color="textPrimary" component="h5">
+                                      {res.restaurant_name}
+                                </Typography>
+                              </div>
+                              <div className="home-rest-categories">
+                              <Typography variant="body1" color="textPrimary" component="p">
                                     {res.categories}
-                             </Typography><br/><br/>
-                             <div className="rating-and-price"> 
-                              
+                              </Typography>
+                              </div>
+                              <div className="rating-and-price"> 
                                     <div className="rating"> 
-                                    <i className="fa fa-star" aria-hidden="true"></i>
-                                    {" "}  {res.customer_rating} ({res.number_customers_rated})
+                                      <i className="fa fa-star" aria-hidden="true"></i>
+                                      {" "}  {res.customer_rating} ({res.number_customers_rated})
                                     </div>
-                                    <Typography align="right" component="p">  <i className="fa fa-inr" aria-hidden="true"></i>{res.average_price} for two </Typography>
-                             </div>                               
-                             </CardContent>  
+                                    <p><i className="fa fa-inr" aria-hidden="true"></i>{res.average_price} for two </p>
+                              </div>                               
+                              </CardContent>  
                              </Card>  
                             
                            </GridListTile> 

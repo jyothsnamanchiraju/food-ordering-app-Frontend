@@ -43,8 +43,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-left: 3em !important;
-    padding-right: 3em !important;
+    width: 100%;
+    text-align: left;
+}
+
+.MuiTypography-body1 {
+    width: 100%;
 }
 
 .MuiFormControl-root {
@@ -81,7 +85,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-left: 2em !important;
         padding-right: 2em !important;
     }
     
