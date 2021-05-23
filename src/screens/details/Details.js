@@ -27,6 +27,7 @@ class Details extends Component {
             snackBarMessage: "",
             restaurantData : {},
             load: false,
+            isLoggedIn: sessionStorage.getItem("access-token") === null ? false : true,
         }
         this.apiURL = "http://localhost:8080/api/";
     }
@@ -69,17 +70,19 @@ class Details extends Component {
 
     /* This methods checks if cart is empty or not and if customer is logged in/out to go to checkout page */
     checkoutHandler = () => {
+      console.log("Details page = "+this.state.totalCost);
       if(this.state.cartItems.length === 0) {
         this.setState({snackBarOpen: true, snackBarMessage: "Please add an item to your cart!",});
-      }
-
-      if(sessionStorage.getItem("access-token") === null){
-        this.setState({snackBarOpen: true, snackBarMessage: "Please login first!",});
       } else {
-        this.props.history.push({
-          pathname: "/checkout",
-          state: {restaurantName: this.state.restaurantData.restaurant_name, checkoutCartItems: this.state.cartItems, totalAmount: this.state.cartItems.totalCost}
-        }) 
+        if(!this.state.isLoggedIn){
+          this.setState({snackBarOpen: true, snackBarMessage: "Please login first!",});
+        } else {
+          sessionStorage.setItem("restaurantDetails",JSON.stringify(this.state.restaurantData));
+          this.props.history.push({
+            pathname: "/checkout",
+            state: {checkoutCartItems: this.state.cartItems, totalAmount: this.state.totalCost}
+          }) 
+        }
       }
     }
 

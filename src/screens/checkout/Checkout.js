@@ -1,5 +1,5 @@
 import {Component} from 'react';
-import './checkout.css';
+import './Checkout.css';
 import Header from "../../common/header/Header";
 //Material-ui Components
 import Grid from "@material-ui/core/Grid";
@@ -229,20 +229,20 @@ this.mounted = true;
 
 //Set component state values from props passed from Details page
 componentWillMount(){
-  try{
-    console.log(this.props.history.location.state.chcartItems.ItemList);
-    this.setState({chcartItems:this.props.history.location.state.chcartItems});
-    this.setState({totalCartItemsValue:this.props.history.location.state.totalCartItemsValue});
+  //try{
+    console.log(this.props.history.location.state.totalAmount);
+    this.setState({chcartItems:this.props.history.location.state.checkoutCartItems});
+    this.setState({totalCartItemsValue:this.props.history.location.state.totalAmount});
     this.setState({resDetails:JSON.parse(sessionStorage.getItem("restaurantDetails"))});
     this.getAddresses(baseURL, access_token);
     this.getPaymentMethods();
     this.getStates();
-  } catch {
-    this.mounted = false;
-    this.props.history.push({
-      pathname: "/"
-     });
-  }
+  // } catch {
+  //   this.mounted = false;
+  //   this.props.history.push({
+  //     pathname: "/"
+  //    });
+  // }
 }
 
 /*
@@ -347,7 +347,7 @@ if(sessionStorage.getItem("selAddress")==="null" || sessionStorage.getItem("selA
 }
 
 //When order is placed,  checkout with order id 
-let orders = this.state.chcartItems.itemList;      
+let orders = this.state.chcartItems;      
 let dataCheckout = JSON.stringify({                  
     "address_id": sessionStorage.getItem("selected"),
     "bill": this.state.totalCartItemsValue,
@@ -362,7 +362,7 @@ let dataCheckout = JSON.stringify({
         }))
     ,
     "payment_id": sessionStorage.getItem("paymentMethod"),
-    "restaurant_id": JSON.parse(sessionStorage.getItem("restaurantDetails")).id     
+    "restaurant_id": JSON.parse(sessionStorage.getItem("restaurantDetails")).id,     
 })       
 let that = this;
 let access_token = sessionStorage.getItem("access-token");
@@ -682,7 +682,7 @@ render(){
                 justify="space-between"
                 alignItems="center"
              >
-        {this.props.history.location.state.chcartItems.itemList.map((item, index) => {
+        {this.props.history.location.state.checkoutCartItems.map((item, index) => {
         return(
                <Grid style={{marginLeft:"3%", color:"grey", fontSize:"18px"}}container item xs={12} spacing={1} key={index}>
                <Grid item xs={1}>
@@ -718,7 +718,7 @@ render(){
                         </Grid>
                         <Grid item xs={3}>
                         <Typography style={{marginLeft:"3%",fontSize:"140%",fontWeight:"bold"}}>                                                       
-                        <i style={{color:"grey"}}className="fa fa-inr"></i><span>  {this.props.history.location.state.totalCartItemsValue}</span>
+                        <i style={{color:"grey"}}className="fa fa-inr"></i><span>  {this.state.totalCartItemsValue}</span>
                         </Typography>
                         </Grid>
                     </Grid>
