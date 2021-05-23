@@ -94,6 +94,7 @@ class Header extends Component{
             snackBarMessage: "",
             signupError: false,
             signupErrorMsg: "",
+            loginErrorMsg: "",
             snackBarOpen: false,
         }
     }
@@ -107,7 +108,7 @@ class Header extends Component{
     }
 
     closeModalHandler = ()=>{
-        this.setState({ loginModalOpen: false, value: 0}); 
+        this.setState({ loginModalOpen: false, value: 0, loginError: false}); 
 
         this.setState({ contactnumberRequired:"dispNone", 
                         passwordRequired:"dispNone"});
@@ -130,39 +131,41 @@ class Header extends Component{
     }
 
     loginClickHandler =()=>{
-          this.state.contactnumber === "" ?  this.setState({contactnumberRequired:"dispBlock", validlogin: false}) : this.setState({contactnumberRequired:"dispNone", validlogin: true}); 
-          this.state.password === "" ?  this.setState({passwordRequired:"dispBlock", validlogin: false}) : this.setState({passwordRequired:"dispNone", validlogin: true}); 
-         
-          if(this.state.validlogin){
-            console.log("valid login = "+this.state.validlogin+"c = "+this.state.contactnumber+"P..= "+this.state.password); 
+        this.state.contactnumber === "" ?  this.setState({contactnumberRequired:"dispBlock", loginError: false}) : ValidContact(this.state.contactnumber) ? this.setState({invalidContact:"dispNone", }): this.setState({invalidContact:"dispBlock", loginError: false}); 
+        this.state.password === "" ?  this.setState({passwordRequired:"dispBlock", loginError: false}) : this.setState({passwordRequired:"dispNone",}); 
+        
+        if(this.state.contactnumber === "" || this.state.password === "" || !ValidContact(this.state.contactnumber)){return;}
+        console.log("valid login = "+this.state.validlogin+"c = "+this.state.contactnumber+"P..= "+this.state.password); 
 
-              let dataLogin = null; 
-              let xhrLogin = new XMLHttpRequest(); 
-              let that = this; 
+        let dataLogin = null; 
+        let xhrLogin = new XMLHttpRequest(); 
+        let that = this; 
 
-              xhrLogin.addEventListener("readystatechange", function(){
-                    if(this.readyState ===4){
-                        console.log("Vastunna... vachesa");
-                        console.log(this.responseText);
-                        sessionStorage.setItem("uuid", JSON.parse(this.responseText).id); 
-                        sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token")); 
-                        
-                        that.setState({loggedInCustomerName: JSON.parse(this.responseText).first_name}); 
+        xhrLogin.addEventListener("readystatechange", function(){
+            if(this.readyState ===4){
+                let loginResponse = JSON.parse(xhrLogin.response);
 
-                        that.setState({
-                            loggedIn:true, snackBarMessage: "Logged in successfully!", snackBarOpen: true,
-                        }); 
-                        that.closeModalHandler(); 
-                    }
+                if (loginResponse.code === 'ATH-001' || loginResponse.code === 'ATH-002') {
+                    that.setState({ loginError: true });
+                    that.setState({ loginErrorMsg: loginResponse.message });
+                } else {
+                    sessionStorage.setItem("uuid", JSON.parse(this.responseText).id); 
+                    sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token")); 
+                
+                    that.setState({loggedInCustomerName: JSON.parse(this.responseText).first_name}); 
 
-              }); 
-              xhrLogin.open("POST", this.props.baseUrl+"customer/login"); 
-              xhrLogin.setRequestHeader("Authorization","Basic "+ window.btoa(this.state.contactnumber+":"+this.state.password)); 
-              xhrLogin.setRequestHeader("Content-Type", "application/json"); 
-              xhrLogin.setRequestHeader("Cache-Control", "no-cache"); 
-              xhrLogin.send(dataLogin); 
-          }
-          
+                    that.setState({
+                        loggedIn:true, snackBarMessage: "Logged in successfully!", snackBarOpen: true,
+                    }); 
+                    that.closeModalHandler(); 
+                }
+            }
+        }); 
+        xhrLogin.open("POST", this.props.baseUrl+"customer/login"); 
+        xhrLogin.setRequestHeader("Authorization","Basic "+ window.btoa(this.state.contactnumber+":"+this.state.password)); 
+        xhrLogin.setRequestHeader("Content-Type", "application/json"); 
+        xhrLogin.setRequestHeader("Cache-Control", "no-cache"); 
+        xhrLogin.send(dataLogin);     
     }
 
     inputFirstnameChangeHandler = (e) =>{
@@ -241,7 +244,7 @@ class Header extends Component{
     }
 
     /* Close the snackbar */
-    snackbarCloseHandler = (e, reason) => {
+    snackbarCloseHandler = (reason) => {
         if (reason === 'clickaway') {
             return;
         }
@@ -315,12 +318,21 @@ class Header extends Component{
                             <InputLabel htmlFor="contactnumber"> Contact Number </InputLabel>
                             <Input id="contactnumber" type="text" contactnumber={this.state.contactnumber} onChange={this.inputContactNumberChangeHandler}/>
                             <FormHelperText className={this.state.contactnumberRequired}><span className="red">required</span></FormHelperText>
+                            <FormHelperText className={this.state.invalidContact}>
+                                <span className="red">
+                                Contact No. must contain only numbers and must be 10 digits long
+                                </span>
+                            </FormHelperText>
                         </FormControl> <br/>
                         <FormControl required>
                             <InputLabel htmlFor="password"> Password </InputLabel>
                             <Input id="password" type="password" password={this.state.password} onChange={this.inputPasswordChangeHandler}/>
                             <FormHelperText className={this.state.passwordRequired}><span className="red">required</span></FormHelperText>
-                        </FormControl> <br/><br/>
+                        </FormControl> <br/>
+                        {this.state.loginError ?
+                            <FormHelperText style={{marginBottom: "10px"}}><span className="red">{this.state.loginErrorMsg}</span></FormHelperText>
+                            : ""
+                        }
                         <Button variant="contained" color="primary" onClick={this.loginClickHandler}>Login</Button>
                     </TabContainer>
                     }
@@ -390,7 +402,7 @@ class Header extends Component{
                         message={this.state.snackBarMessage}
                         action={
                             <React.Fragment>
-                                <IconButton size="small" aria-label="close" color="inherit" onClick={this.closeSignupSnackbar}>
+                                <IconButton size="small" aria-label="close" color="inherit" onClick={this.snackbarCloseHandler}>
                                     <CloseIcon fontSize="small" />
                                 </IconButton>
                             </React.Fragment>
