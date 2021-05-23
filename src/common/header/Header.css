@@ -39,6 +39,18 @@
     color: red; 
 }
 
+.MuiTypography-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 3em !important;
+    padding-right: 3em !important;
+}
+
+.MuiFormControl-root {
+    width: 100%;
+}
+
 @media screen and (max-width: 600px) {
     .hdr {
         display: flex;
