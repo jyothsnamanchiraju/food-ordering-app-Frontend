@@ -3,21 +3,30 @@
     display:flex; 
     flex-direction: row; 
     justify-content: space-between;
-    padding: 10px; 
+    align-items: center;
+    padding: 15px; 
 }
 
 .app-icon{
     color: white; 
 }
+
+.header-searchbox {
+    width: 300px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+}
+
 .search-box{
-    /*background-color: #585C5C;*/ 
-   /* background-color: #707272 ;*/ 
-    color: white;  
+    color: #fff;  
     width:300px; 
 }
-.search-box:active{
-    border-bottom: white;
+
+.search-box::after {
+    border-bottom: 2px solid #fff !important;
 }
+
 .dispBlock{
     display: block;
 }
@@ -28,4 +37,17 @@
 
 .red{
     color: red; 
+}
+
+@media screen and (max-width: 600px) {
+    .hdr {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .app-icon,
+    .header-searchbox {
+        margin-bottom: 1em;
+    }
 }

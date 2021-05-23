@@ -266,12 +266,10 @@ class Header extends Component{
                     {
                     (this.props.page==="HomePage") 
                      ?
-                        <div >
-                            
-                        <span style={{color:'white'}}><Search/> </span> 
-                        <Input className="search-box" placeholder="Search by Restaurant Name" style={{color:'white'}} onChange={this.searchRestaurantHandler}> 
-                        </Input>
-                        
+                        <div className="header-searchbox">
+                            <span className="search-icon" style={{color:'white'}}><Search/> </span> 
+                            <Input className="search-box" placeholder="Search by Restaurant Name" style={{color:'white'}} onChange={this.searchRestaurantHandler}> 
+                            </Input>
                         </div>
                      :   
                         <div> </div>
