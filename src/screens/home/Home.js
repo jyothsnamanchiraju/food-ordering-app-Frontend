@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
-import 'font-awesome/css/font-awesome.min.css'; 
+import '../../assets/font-awesome-4.7.0/css/font-awesome.min.css';
 
 class Home extends Component{
 

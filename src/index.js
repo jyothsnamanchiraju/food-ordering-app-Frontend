@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Details from './screens/details/Details';
+import Controller from './screens/Controller';
 //import registerServiceWorker from './registerServiceWorker'; 
 
 ReactDOM.render(
-  <Details />,
+  <Controller />,
   document.getElementById('root')
 );
 //registerServiceWorker(); 
