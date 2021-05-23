@@ -48,7 +48,7 @@
 }
 
 .MuiFormControl-root {
-    width: 100%;
+    width: 90%;
 }
 
 @media screen and (max-width: 600px) {
@@ -61,5 +61,31 @@
     .app-icon,
     .header-searchbox {
         margin-bottom: 1em;
+    }
+
+    .ReactModal__Content--after-open {
+        margin-top: 5em;
+        width: 70%;
+        overflow-y: auto;
+    }
+
+    .ReactModal__Overlay--after-open {
+        overflow-y: auto;
+    }
+
+    .signup-button {
+        margin-bottom: 2em;
+    }
+
+    .MuiTypography-root {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-left: 2em !important;
+        padding-right: 2em !important;
+    }
+    
+    .MuiFormControl-root {
+        width: 100%;
     }
 }

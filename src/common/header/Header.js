@@ -324,19 +324,19 @@ class Header extends Component{
                             <InputLabel htmlFor="firstname"> First Name </InputLabel>
                             <Input id="firstname" type="text" firstname={this.state.firstname} onChange={this.inputFirstnameChangeHandler}/>
                             <FormHelperText className={this.state.firstnameRequired}><span className="red">required</span></FormHelperText>
-                        </FormControl> <br/><br/>
+                        </FormControl> <br/>
 
                         <FormControl required>
                             <InputLabel htmlFor="lastname"> Last Name </InputLabel>
                             <Input id="lastname" type="text" lastname={this.state.lastname} onChange={this.inputLastnameChangeHandler}/>
-                        </FormControl> <br/><br/>
+                        </FormControl> <br/>
 
                         <FormControl required>
                             <InputLabel htmlFor="email"> Email </InputLabel>
                             <Input id="email" type="email" email={this.state.email} onChange={this.inputEmailChangeHandler}/>
                             <FormHelperText className={this.state.emailRequired}><span className="red">required</span></FormHelperText>
                             <FormHelperText className={this.state.invalidEmail}><span className="red">Invalid Email</span></FormHelperText>
-                        </FormControl> <br/><br/>
+                        </FormControl> <br/>
 
                         <FormControl required>
                             <InputLabel htmlFor="regpassword"> Password </InputLabel>
@@ -344,11 +344,11 @@ class Header extends Component{
                             <FormHelperText className={this.state.regPasswordRequired}><span className="red">required</span></FormHelperText>
                             <FormHelperText className={this.state.invalidRegPassword}>
                                 <span className="red">
-                                Password must contain at least one capital letter, one small letter, one number, <br/>
+                                Password must contain at least one capital letter, one small letter, one number,
                                 and one special character
                                 </span>
                             </FormHelperText>
-                        </FormControl> <br/><br/>
+                        </FormControl> <br/>
                         <FormControl required>
                             <InputLabel htmlFor="regcontactnumber"> Contact No. </InputLabel>
                             <Input id="regcontactnumber" type="text" regcontactnumber={this.state.regContactNumber} onChange={this.inputRegContactNumberChangeHandler}/>
@@ -359,7 +359,7 @@ class Header extends Component{
                                 </span>
                             </FormHelperText>
                         </FormControl> <br/><br/>
-                        <Button variant="contained" color="primary" onClick={this.signupClickHandler}>SIGNUP</Button>
+                        <Button className="signup-button" variant="contained" color="primary" onClick={this.signupClickHandler}>SIGNUP</Button>
                     </TabContainer>
                     }
                     
