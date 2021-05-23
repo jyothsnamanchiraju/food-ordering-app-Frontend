@@ -25,6 +25,7 @@
 }
 
 .MuiGridListTile-tile {
+    cursor: pointer;
     overflow: inherit !important;
 }
 
