@@ -10,7 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input'; 
 import PropTypes from 'prop-types'; 
 import FormHelperText from '@material-ui/core/FormHelperText'; 
-
+import { Link } from "react-router-dom";
 import Button from '@material-ui/core/Button'; 
 import Fastfood from '@material-ui/icons/Fastfood'; 
 import Search from '@material-ui/icons/Search'; 
@@ -298,8 +298,16 @@ class Header extends Component{
                             anchorEl={this.state.anchorEl}
                             keepMounted 
                             open={this.state.anchorEl} 
-                            onClose={this.closeMenuHandler}>  
+                            onClose={this.closeMenuHandler}> 
+                            <Link
+                            to={"/profile"}
+                            underline="none"
+                            color={"default"}
+                            style={{textDecoration: "none", color: "#000"}}
+                            >
                                 <MenuItem onClick={this.closeMenuHandler}>Profile</MenuItem>
+                            </Link> 
+                                
                                 <MenuItem onClick={this.logoutMenuHandler}>Logout</MenuItem>
                             </Menu>
                         </div>
