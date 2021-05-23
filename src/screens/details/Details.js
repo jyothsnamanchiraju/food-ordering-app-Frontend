@@ -74,7 +74,7 @@ class Details extends Component {
       if(this.state.cartItems.length === 0) {
         this.setState({snackBarOpen: true, snackBarMessage: "Please add an item to your cart!",});
       } else {
-        if(!this.state.isLoggedIn){
+        if(this.state.isLoggedIn){
           this.setState({snackBarOpen: true, snackBarMessage: "Please login first!",});
         } else {
           sessionStorage.setItem("restaurantDetails",JSON.stringify(this.state.restaurantData));
