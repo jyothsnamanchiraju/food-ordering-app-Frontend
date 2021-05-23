@@ -87,12 +87,14 @@ class Header extends Component{
             invalidContact: "dispNone", 
             allFieldsValid: false,
             signupSuccessful: false, 
-            openSignupSnackBar: false, 
             loggedIn: false , 
             openLoginSnackBar: false, 
             loggedInCustomerName:"", 
-            anchorEl: null
-           // openMenu: false
+            anchorEl: null,
+            snackBarMessage: "",
+            signupError: false,
+            signupErrorMsg: "",
+            snackBarOpen: false,
         }
     }
   
@@ -148,7 +150,7 @@ class Header extends Component{
                         that.setState({loggedInCustomerName: JSON.parse(this.responseText).first_name}); 
 
                         that.setState({
-                            loggedIn:true, openLoginSnackBar: true
+                            loggedIn:true, snackBarMessage: "Logged in successfully!", snackBarOpen: true,
                         }); 
                         that.closeModalHandler(); 
                     }
@@ -184,18 +186,26 @@ class Header extends Component{
     }
     signupClickHandler =() =>{
         // validating the fields of Signup form 
-        this.state.firstname === "" ?  this.setState({firstnameRequired:"dispBlock", allFieldsValid: false}) : this.setState({firstnameRequired:"dispNone", allFieldsValid: true}); 
+        this.state.firstname === "" ?  this.setState({firstnameRequired:"dispBlock", signupError: false}) : this.setState({firstnameRequired:"dispNone",}); 
         
         //validating the email- 
-        this.state.email === "" ?  this.setState({emailRequired:"dispBlock", allFieldsValid: false}) : validator.isEmail(this.state.email) ? this.setState({invalidEmail:"dispNone", allFieldsValid: true}) : this.setState({invalidEmail:"dispBlock", allFieldsValid: false}); 
+        this.state.email === "" ?  this.setState({emailRequired:"dispBlock", signupError: false}) : validator.isEmail(this.state.email) ? this.setState({invalidEmail:"dispNone", }) : this.setState({invalidEmail:"dispBlock", signupError: false}); 
         
         //validating the password-
-        this.state.regpassword === "" ?  this.setState({regPasswordRequired:"dispBlock", allFieldsValid: false}) : validPassword(this.state.regpassword) ? this.setState({invalidRegPassword:"dispNone", allFieldsValid: true}): this.setState({invalidRegPassword:"dispBlock", allFieldsValid: false});
+        this.state.regpassword === "" ?  this.setState({regPasswordRequired:"dispBlock", signupError: false}) : validPassword(this.state.regpassword) ? this.setState({invalidRegPassword:"dispNone", }): this.setState({invalidRegPassword:"dispBlock", signupError: false});
         
         //validating the contactnumber - 
-        this.state.regContactNumber === "" ?  this.setState({regContactRequired:"dispBlock", allFieldsValid: false}) : ValidContact(this.state.regContactNumber) ? this.setState({invalidContact:"dispNone", allFieldsValid: true}): this.setState({invalidContact:"dispBlock", allFieldsValid: false}); 
-   
-        if(this.state.allFieldsValid){
+        this.state.regContactNumber === "" ?  this.setState({regContactRequired:"dispBlock", signupError: false}) : ValidContact(this.state.regContactNumber) ? this.setState({invalidContact:"dispNone", }): this.setState({invalidContact:"dispBlock", signupError: false}); 
+        
+        if(this.state.firstname === "" 
+        || this.state.email === "" 
+        || this.state.regpassword === "" 
+        || this.state.regContactNumber === "" 
+        || !validator.isEmail(this.state.email)
+        || !validPassword(this.state.regpassword)
+        || !ValidContact(this.state.regContactNumber)){return;}
+
+        
             console.log("Header BaseURL = "+this.props.baseUrl); 
                 let dataSignup = JSON.stringify(
                     {
@@ -211,30 +221,31 @@ class Header extends Component{
                 let that = this; 
                 xhrSignup.addEventListener("readystatechange", function(){
                     if(this.readyState ===4){
-                        that.setState({signupSuccessful : true, value: 0, openSnackBar: true}); 
-                    }
+                        let signupResponse = JSON.parse(this.response);
+                        if (signupResponse.code === 'SGR-001'
+                            || signupResponse.code === 'SGR-002'
+                            || signupResponse.code === 'SGR-003'
+                            || signupResponse.code === 'SGR-004') {
+                            that.setState({signupError: true, signUpErrorMsg: signupResponse.message, });
+                        } else {
+                            that.setState({signupSuccessful : true, value: 0, snackBarMessage: "Registered successfully! Please login now!", snackBarOpen: true}); 
+                        }
+                    } 
                 }); 
                 
                 xhrSignup.open("POST", this.props.baseUrl+"customer/signup"); 
                 xhrSignup.setRequestHeader("Content-Type", "application/json"); 
                 xhrSignup.setRequestHeader("Cache-Control", "no-cache"); 
                 xhrSignup.send(dataSignup);  
+        
+    }
+
+    /* Close the snackbar */
+    snackbarCloseHandler = (e, reason) => {
+        if (reason === 'clickaway') {
+            return;
         }
-    }
-
-    closeSignupSnackbar = (reason) => {
-        if(reason ==='clickaway')
-         return; 
-        
-        this.setState({openSignupSnackBar: false}); 
-    }
-
-
-    closeLoginSnackbar = (reason) => {
-        if(reason ==='clickaway')
-        return; 
-        
-        this.setState({openLoginSnackBar: false}); 
+        this.setState({snackBarOpen: false});
     }
 
     searchRestaurantHandler =(e) => {
@@ -355,7 +366,15 @@ class Header extends Component{
                                 Contact No. must contain only numbers and must be 10 digits long
                                 </span>
                             </FormHelperText>
-                        </FormControl> <br/><br/>
+                        </FormControl> <br/>
+                        {this.state.signupError ?
+                            <FormHelperText style={{marginBottom: "10px"}}>
+                                <span className="red">
+                                {this.state.signUpErrorMsg}
+                                </span>
+                            </FormHelperText>
+                            : ""
+                        }
                         <Button className="signup-button" variant="contained" color="primary" onClick={this.signupClickHandler}>SIGNUP</Button>
                     </TabContainer>
                     }
@@ -366,29 +385,12 @@ class Header extends Component{
                             vertical: 'bottom',
                             horizontal: 'left',
                           }}
-                        open={this.state.openSignupSnackBar}      
+                        open={this.state.snackBarOpen}    
                         autoHideDuration={6000}
-                        message="Registered successfully! Please login now!"
+                        message={this.state.snackBarMessage}
                         action={
                             <React.Fragment>
                                 <IconButton size="small" aria-label="close" color="inherit" onClick={this.closeSignupSnackbar}>
-                                    <CloseIcon fontSize="small" />
-                                </IconButton>
-                            </React.Fragment>
-                        }
-                    />
-
-                <Snackbar
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'left',
-                          }}
-                        open={this.state.openLoginSnackBar}      
-                        autoHideDuration={6000}
-                        message="Logged in successfully!"
-                        action={
-                            <React.Fragment>
-                                <IconButton size="small" aria-label="close" color="inherit" onClick={this.closeLoginSnackbar}>
                                     <CloseIcon fontSize="small" />
                                 </IconButton>
                             </React.Fragment>
