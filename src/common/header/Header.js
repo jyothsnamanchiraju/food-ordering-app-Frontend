@@ -141,6 +141,7 @@ class Header extends Component{
               xhrLogin.addEventListener("readystatechange", function(){
                     if(this.readyState ===4){
                         console.log("Vastunna... vachesa");
+                        console.log(this.responseText);
                         sessionStorage.setItem("uuid", JSON.parse(this.responseText).id); 
                         sessionStorage.setItem("access-token", xhrLogin.getResponseHeader("access-token")); 
                         
@@ -184,19 +185,15 @@ class Header extends Component{
     signupClickHandler =() =>{
         // validating the fields of Signup form 
         this.state.firstname === "" ?  this.setState({firstnameRequired:"dispBlock", allFieldsValid: false}) : this.setState({firstnameRequired:"dispNone", allFieldsValid: true}); 
-        this.state.email === "" ?  this.setState({emailRequired:"dispBlock", allFieldsValid: false}) : this.setState({emailRequired:"dispNone", allFieldsValid: true}); 
-        this.state.regpassword === "" ?  this.setState({regPasswordRequired:"dispBlock", allFieldsValid: false}) : this.setState({regPasswordRequired:"dispNone", allFieldsValid: true}); 
-        this.state.regContactNumber === "" ?  this.setState({regContactRequired:"dispBlock", allFieldsValid: false}) : this.setState({regContactRequired:"dispNone", allFieldsValid: true}); 
-
-
-        //validating the email-       
-       validator.isEmail(this.state.email) ? this.setState({invalidEmail:"dispNone", allFieldsValid: true}) : this.setState({invalidEmail:"dispBlock", allFieldsValid: false}); 
-
-        //validating the password- 
-       validPassword(this.state.regpassword) ? this.setState({invalidRegPassword:"dispNone", allFieldsValid: true}): this.setState({invalidRegPassword:"dispBlock", allFieldsValid: false});
-
+        
+        //validating the email- 
+        this.state.email === "" ?  this.setState({emailRequired:"dispBlock", allFieldsValid: false}) : validator.isEmail(this.state.email) ? this.setState({invalidEmail:"dispNone", allFieldsValid: true}) : this.setState({invalidEmail:"dispBlock", allFieldsValid: false}); 
+        
+        //validating the password-
+        this.state.regpassword === "" ?  this.setState({regPasswordRequired:"dispBlock", allFieldsValid: false}) : validPassword(this.state.regpassword) ? this.setState({invalidRegPassword:"dispNone", allFieldsValid: true}): this.setState({invalidRegPassword:"dispBlock", allFieldsValid: false});
+        
         //validating the contactnumber - 
-        ValidContact(this.state.regContactNumber) ? this.setState({invalidContact:"dispNone", allFieldsValid: true}): this.setState({invalidContact:"dispBlock", allFieldsValid: false}); 
+        this.state.regContactNumber === "" ?  this.setState({regContactRequired:"dispBlock", allFieldsValid: false}) : ValidContact(this.state.regContactNumber) ? this.setState({invalidContact:"dispNone", allFieldsValid: true}): this.setState({invalidContact:"dispBlock", allFieldsValid: false}); 
    
         if(this.state.allFieldsValid){
             console.log("Header BaseURL = "+this.props.baseUrl); 
