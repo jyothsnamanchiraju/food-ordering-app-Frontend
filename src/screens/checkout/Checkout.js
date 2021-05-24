@@ -232,7 +232,7 @@ class Checkout extends Component {
 
   //Set component state values from props passed from Details page
   componentWillMount() {
-    //try{
+    try{
     this.setState({
       chcartItems: this.props.history.location.state.checkoutCartItems,
     });
@@ -245,12 +245,12 @@ class Checkout extends Component {
     this.getAddresses(baseURL, access_token);
     this.getPaymentMethods();
     this.getStates();
-    // } catch {
-    //   this.mounted = false;
-    //   this.props.history.push({
-    //     pathname: "/"
-    //    });
-    // }
+    } catch {
+      this.mounted = false;
+      this.props.history.push({
+        pathname: "/"
+       });
+    }
   }
 
   /*
@@ -907,32 +907,34 @@ addressChangeHandler = () => {
                       <br />
                     </Grid>
                   </Grid>
-                  <Grid container item xs={12}>
-                    <Grid item xs={5}>
-                      <Typography
-                        style={{
-                          marginLeft: "14%",
-                          fontSize: "140%",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Net Amount
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={4}></Grid>
-                    <Grid item xs={3}>
-                      <Typography
-                        style={{
-                          marginLeft: "3%",
-                          fontSize: "140%",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        <i style={{ color: "grey" }} className="fa fa-inr"></i>
-                        <span> {this.state.totalCartItemsValue}</span>
-                      </Typography>
-                    </Grid>
-                  </Grid>
+
+                  <div
+                    style={{
+                      width: "90%",
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Typography
+                      style={{
+                        width: "50%",
+                        fontSize: "140%",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Net Amount
+                    </Typography>
+
+                    <span
+                      style={{
+                        fontSize: "140%",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      <i style={{ color: "grey" }} className="fa fa-inr"></i>
+                      <span> {this.state.totalCartItemsValue}</span>
+                    </span>
+                  </div>
                 </Grid>
               </CardContent>
               <CardActions>
