@@ -37,7 +37,7 @@ class Home extends Component{
   }
 
   searchRestaurantByName = (resName) =>{
-    console.log("search word = " + resName); 
+    
     this.setState({searchRestaurant: resName}); 
 
     if(resName !== "" && resName!== " "){
@@ -45,8 +45,7 @@ class Home extends Component{
             let xhr = new XMLHttpRequest(); 
             let that = this; 
             let getUrl = this.props.baseUrl+"restaurant/name/"+resName ; 
-            console.log("getUrl = "+ getUrl); 
-
+       
             xhr.addEventListener("readystatechange", function(){
               if(this.readyState === 4){
                 that.setState({listOfRestaurantsBySearch: JSON.parse(this.responseText).restaurants}); 
@@ -89,7 +88,7 @@ class Home extends Component{
                               <img id= {res.id} src={res.photo_URL} alt={res.restaurant_name} className="restaurant-image"/>
                               <CardContent className="card-content">
                               <div className="home-rest-name">
-                                <Typography variant="h4" color="textPrimary" component="h5">
+                                <Typography variant="h5" color="textPrimary" component="h5">
                                       {res.restaurant_name}
                                 </Typography>
                               </div>

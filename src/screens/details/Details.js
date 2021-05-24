@@ -69,7 +69,7 @@ class Details extends Component {
 
     /* This methods checks if cart is empty or not and if customer is logged in/out to go to checkout page */
     checkoutHandler = () => {
-      console.log("Details page = "+this.state.totalCost);
+
       if(this.state.cartItems.length === 0) {
         this.setState({snackBarOpen: true, snackBarMessage: "Please add an item to your cart!",});
       } else {
@@ -106,6 +106,7 @@ class Details extends Component {
       let updated = false;
 
       this.state.cartItems.forEach((eachItemFromCart) => {
+        
         if(eachItemFromCart.item.id === element.item.id) {
           if(!("quantity" in eachItemFromCart.item)) {
             element.item.quantity = 1;
@@ -114,6 +115,7 @@ class Details extends Component {
           }
           updated = true;
         }
+    
       })
 
       if(this.state.cartItems.length === 0 || updated === false) {
@@ -137,7 +139,7 @@ class Details extends Component {
 
         return(
           <div>
-          <Header />
+          <Header baseUrl={this.props.baseUrl}/>
           { this.state.load === true 
             ?
             <div className="container"> 

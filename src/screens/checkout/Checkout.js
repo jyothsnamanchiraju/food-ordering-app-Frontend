@@ -230,7 +230,6 @@ this.mounted = true;
 //Set component state values from props passed from Details page
 componentWillMount(){
   //try{
-    console.log(this.props.history.location.state.totalAmount);
     this.setState({chcartItems:this.props.history.location.state.checkoutCartItems});
     this.setState({totalCartItemsValue:this.props.history.location.state.totalAmount});
     this.setState({resDetails:JSON.parse(sessionStorage.getItem("restaurantDetails"))});
@@ -358,7 +357,7 @@ let dataCheckout = JSON.stringify({
         {
         "item_id":  item.item.id,
         "price" : item.item.price,
-        "quantity" : item.quantity
+        "quantity" : item.item.quantity
         }))
     ,
     "payment_id": sessionStorage.getItem("paymentMethod"),

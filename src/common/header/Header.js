@@ -101,6 +101,7 @@ class Header extends Component{
   
     tabchangeHandler =(event, value)=>{
         this.setState({value}); 
+        this.setState({password:"", regpassword:""}); 
     }
 
     loginModalHandler = ()=>{
@@ -135,13 +136,14 @@ class Header extends Component{
         this.state.password === "" ?  this.setState({passwordRequired:"dispBlock", loginError: false}) : this.setState({passwordRequired:"dispNone",}); 
         
         if(this.state.contactnumber === "" || this.state.password === "" || !ValidContact(this.state.contactnumber)){return;}
-        console.log("valid login = "+this.state.validlogin+"c = "+this.state.contactnumber+"P..= "+this.state.password); 
+        
 
         let dataLogin = null; 
         let xhrLogin = new XMLHttpRequest(); 
         let that = this; 
 
         xhrLogin.addEventListener("readystatechange", function(){
+           
             if(this.readyState ===4){
                 let loginResponse = JSON.parse(xhrLogin.response);
 
@@ -208,7 +210,6 @@ class Header extends Component{
         || !ValidContact(this.state.regContactNumber)){return;}
 
         
-            console.log("Header BaseURL = "+this.props.baseUrl); 
                 let dataSignup = JSON.stringify(
                     {
                         "contact_number": this.state.regContactNumber,
@@ -265,6 +266,11 @@ class Header extends Component{
     logoutMenuHandler = () =>{
         sessionStorage.clear();
         this.setState({loggedIn: false, loggedInCustomerName:"", anchorEl: null}); 
+        this.setState({
+            contactnumber: "", 
+            password: "", 
+            validlogin: false,
+        });
     }
     render(){
         return (
@@ -293,11 +299,11 @@ class Header extends Component{
                         </div>
                     :    
                         <div>
-                        <Button aria-controls="profile-menu" aria-haspopup="true" color="default" variant ="contained" onClick = {this.openMenuHandler}> <AccountCircle/>{sessionStorage.getItem('firstName')} </Button>
+                        <Button id="menubtn" aria-controls="profile-menu" aria-haspopup="true" color="default" variant ="contained" onClick = {this.openMenuHandler}> <AccountCircle/>{sessionStorage.getItem('firstName')} </Button>
                             <Menu id="profile-menu" 
                             anchorEl={this.state.anchorEl}
                             keepMounted 
-                            open={this.state.anchorEl} 
+                            open={Boolean(this.state.anchorEl)} 
                             onClose={this.closeMenuHandler}> 
                             <Link
                             to={"/profile"}
@@ -307,8 +313,15 @@ class Header extends Component{
                             >
                                 <MenuItem onClick={this.closeMenuHandler}>Profile</MenuItem>
                             </Link> 
-                                
+
+                            <Link
+                             to={"/"}
+                             underline="none"
+                             color={"default"}
+                             style={{textDecoration: "none", color: "#000"}}
+                             >    
                                 <MenuItem onClick={this.logoutMenuHandler}>Logout</MenuItem>
+                            </Link>    
                             </Menu>
                         </div>
                     }
@@ -350,18 +363,18 @@ class Header extends Component{
                     <TabContainer>
                         <FormControl required>
                             <InputLabel htmlFor="firstname"> First Name </InputLabel>
-                            <Input id="firstname" type="text" firstname={this.state.firstname} onChange={this.inputFirstnameChangeHandler}/>
+                            <Input id="firstname" type="text" value={this.state.firstname} firstname={this.state.firstname} onChange={this.inputFirstnameChangeHandler}/>
                             <FormHelperText className={this.state.firstnameRequired}><span className="red">required</span></FormHelperText>
                         </FormControl> <br/>
 
                         <FormControl required>
                             <InputLabel htmlFor="lastname"> Last Name </InputLabel>
-                            <Input id="lastname" type="text" lastname={this.state.lastname} onChange={this.inputLastnameChangeHandler}/>
+                            <Input id="lastname" type="text" value={this.state.lastname} lastname={this.state.lastname} onChange={this.inputLastnameChangeHandler}/>
                         </FormControl> <br/>
 
                         <FormControl required>
                             <InputLabel htmlFor="email"> Email </InputLabel>
-                            <Input id="email" type="email" email={this.state.email} onChange={this.inputEmailChangeHandler}/>
+                            <Input id="email" type="email" value={this.state.email} email={this.state.email} onChange={this.inputEmailChangeHandler}/>
                             <FormHelperText className={this.state.emailRequired}><span className="red">required</span></FormHelperText>
                             <FormHelperText className={this.state.invalidEmail}><span className="red">Invalid Email</span></FormHelperText>
                         </FormControl> <br/>
@@ -379,7 +392,7 @@ class Header extends Component{
                         </FormControl> <br/>
                         <FormControl required>
                             <InputLabel htmlFor="regcontactnumber"> Contact No. </InputLabel>
-                            <Input id="regcontactnumber" type="text" regcontactnumber={this.state.regContactNumber} onChange={this.inputRegContactNumberChangeHandler}/>
+                            <Input id="regcontactnumber" type="text" value={this.state.regContactNumber} regcontactnumber={this.state.regContactNumber} onChange={this.inputRegContactNumberChangeHandler}/>
                             <FormHelperText className={this.state.regContactRequired}><span className="red">required</span></FormHelperText>
                             <FormHelperText className={this.state.invalidContact}>
                                 <span className="red">
@@ -406,7 +419,8 @@ class Header extends Component{
                             horizontal: 'left',
                           }}
                         open={this.state.snackBarOpen}    
-                        autoHideDuration={6000}
+                        autoHideDuration={2000}
+                        onClose={this.snackbarCloseHandler}
                         message={this.state.snackBarMessage}
                         action={
                             <React.Fragment>
