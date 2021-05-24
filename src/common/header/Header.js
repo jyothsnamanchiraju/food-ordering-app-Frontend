@@ -328,7 +328,7 @@ class Header extends Component{
                             <FormHelperText className={this.state.contactnumberRequired}><span className="red">required</span></FormHelperText>
                             <FormHelperText className={this.state.invalidContact}>
                                 <span className="red">
-                                Contact No. must contain only numbers and must be 10 digits long
+                                Invalid Contact
                                 </span>
                             </FormHelperText>
                         </FormControl> <br/>
