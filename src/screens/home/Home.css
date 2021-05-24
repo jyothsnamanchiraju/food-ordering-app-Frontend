@@ -29,10 +29,6 @@
   overflow: inherit !important;
 }
 
-.MuiGridList-root {
-  overflow: hidden !important;
-}
-
 .restaurant-image {
   height: 250px;
   width: 100%;
