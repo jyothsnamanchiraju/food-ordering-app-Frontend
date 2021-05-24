@@ -1,94 +1,94 @@
-.hdr{
-    background-color: #262828;
-    display:flex; 
-    flex-direction: row; 
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px; 
+.hdr {
+  background-color: #262828;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
 }
 
-.app-icon{
-    color: white; 
+.app-icon {
+  color: white;
 }
 
 .header-searchbox {
-    width: 300px;
-    display: flex;
-    align-items: center;
-    border-radius: 4px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
 }
 
-.search-box{
-    color: #fff;  
-    width:300px; 
+.search-box {
+  color: #fff;
+  width: 300px;
 }
 
 .search-box::after {
-    border-bottom: 2px solid #fff !important;
+  border-bottom: 2px solid #fff !important;
 }
 
-.dispBlock{
-    display: block;
+.dispBlock {
+  display: block;
 }
 
-.dispNone{
-    display: none; 
+.dispNone {
+  display: none;
 }
 
-.red{
-    color: red; 
+.red {
+  color: red;
 }
 
 .MuiTypography-root {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: left;
 }
 
 .MuiTypography-body1 {
-    width: 100%;
+  width: 100%;
 }
 
 .MuiFormControl-root {
-    width: 90%;
+  width: 90%;
 }
 
 @media screen and (max-width: 600px) {
-    .hdr {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .hdr {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .app-icon,
-    .header-searchbox {
-        margin-bottom: 1em;
-    }
+  .app-icon,
+  .header-searchbox {
+    margin-bottom: 1em;
+  }
 
-    .ReactModal__Content--after-open {
-        margin-top: 5em;
-        width: 70%;
-        overflow-y: auto;
-    }
+  .ReactModal__Content--after-open {
+    margin-top: 5em;
+    width: 70%;
+    overflow-y: auto;
+  }
 
-    .ReactModal__Overlay--after-open {
-        overflow-y: auto;
-    }
+  .ReactModal__Overlay--after-open {
+    overflow-y: auto;
+  }
 
-    .signup-button {
-        margin-bottom: 2em;
-    }
+  .signup-button {
+    margin-bottom: 2em;
+  }
 
-    .MuiTypography-root {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-right: 2em !important;
-    }
-    
-    .MuiFormControl-root {
-        width: 100%;
-    }
+  .MuiTypography-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 2em !important;
+  }
+
+  .MuiFormControl-root {
+    width: 100%;
+  }
 }
