@@ -1,0 +1,75 @@
+.home-hdr{
+    width: 100%; 
+}
+
+.grid-root{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    overflow: hidden;
+    width: auto; 
+    padding: 20px; 
+    padding-bottom: 50px;
+}
+
+.grid-list{
+    width:100%; 
+    overflow: hidden;  
+}
+
+.card-root {
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+}
+
+.MuiGridListTile-tile {
+    cursor: pointer;
+    overflow: inherit !important;
+}
+
+.MuiGridList-root {
+    overflow: hidden !important;
+}
+
+.restaurant-image{
+    height:250px;  
+    width: 100%;   
+}
+
+.card-content{
+    box-sizing: border-box;
+    display: flex; 
+    flex-direction: column;
+    justify-content: left;
+    align-items: baseline; 
+    padding: 30px !important;
+} 
+
+.home-rest-name {
+    display: block;
+    align-items: flex-start !important;
+}
+
+.home-rest-categories {
+    margin: 20px 0;
+}
+
+.rating-and-price{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+}
+ 
+.rating{
+    background-color:#FFC300;
+    color:white; 
+    height: 40px; 
+    width:100px;
+    line-height:40px;
+    text-align:center; 
+}
+
