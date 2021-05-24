@@ -232,7 +232,7 @@ class Checkout extends Component {
 
   //Set component state values from props passed from Details page
   componentWillMount() {
-    //try{
+    try{
     this.setState({
       chcartItems: this.props.history.location.state.checkoutCartItems,
     });
@@ -245,12 +245,12 @@ class Checkout extends Component {
     this.getAddresses(baseURL, access_token);
     this.getPaymentMethods();
     this.getStates();
-    // } catch {
-    //   this.mounted = false;
-    //   this.props.history.push({
-    //     pathname: "/"
-    //    });
-    // }
+    } catch {
+      this.mounted = false;
+      this.props.history.push({
+        pathname: "/"
+       });
+    }
   }
 
   /*
